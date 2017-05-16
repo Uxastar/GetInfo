@@ -1,0 +1,14 @@
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Release\GetInfoGUI.exe.config
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Release\GetInfoGUI.exe
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Release\GetInfoGUI.pdb
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.csprojResolveAssemblyReference.cache
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\MainWindow.g.cs
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\App.g.cs
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI_MarkupCompile.cache
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI_MarkupCompile.lref
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\MainWindow.baml
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.g.resources
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.Properties.Resources.resources
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.csproj.GenerateResource.Cache
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.exe
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Release\GetInfoGUI.pdb
