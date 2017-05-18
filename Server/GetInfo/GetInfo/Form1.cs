@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using User;
+using ExtLib;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -17,27 +17,28 @@ namespace GetInfo
 {
     public partial class Form1 : Form
     {
-        
+        public static ISettings settings = new Settings("1.6", null, null, 5006, true);
+        public static ILogger logger = new Logger("log.txt", true);
         static TcpListener listener;
 
         public Form1()
         {
 
-            Settings.Init("1.0", null, "http://url", 5006, true);
+                      
 
             InitializeComponent();
 
             try
             {
-                listener = new TcpListener(IPAddress.Parse("127.0.0.1"), Settings.Port);
+                listener = new TcpListener(IPAddress.Any, settings.Port);
                 listener.Start();
-                Logger.add("Listener start");
+                logger.write("Listener start");
 
                 while (true)
                 {
                     TcpClient client = listener.AcceptTcpClient();
                     ClientObject clientObject = new ClientObject(client);
-                    Logger.add("Client " + client.Client.AddressFamily.ToString() + " connect");
+                    logger.write("Client " + client.Client.AddressFamily.ToString() + " connect");
                     
                     Task clientTask = new Task(clientObject._Process);
                     clientTask.Start();
@@ -46,15 +47,15 @@ namespace GetInfo
             }
             catch (Exception ex)
             {
-                Logger.add(ex.Message + " 0x0f");
+                logger.write(ex.Message);
             }
             finally
             {
-                Logger.add("End listener");
+                logger.write("End listener");
                 if (listener != null)
                 {
                     listener.Stop();
-                    Logger.add("Listener STOP");
+                    logger.write("Listener STOP");
                 }
                     
 

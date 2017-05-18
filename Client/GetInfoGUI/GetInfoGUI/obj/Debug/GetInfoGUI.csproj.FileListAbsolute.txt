@@ -30,5 +30,7 @@ C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Deb
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Debug\GetInfoGUI.csproj.GenerateResource.Cache
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Debug\GetInfoGUI.exe
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\obj\Debug\GetInfoGUI.pdb
-C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\User.dll
-C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\User.pdb
+C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\ExtLib.dll
+C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\ExtLib.pdb
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\ExtLib.dll
+C:\Users\movchan_m\Dropbox\visual studio 2015\Projects\GetInfoGUI\GetInfoGUI\bin\Debug\ExtLib.pdb

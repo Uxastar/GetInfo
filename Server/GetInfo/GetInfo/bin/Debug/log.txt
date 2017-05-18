@@ -1,0 +1,25 @@
+18.05.2017 11:30:53     Listener start
+18.05.2017 11:30:55     Client InterNetwork connect
+18.05.2017 11:30:55     10
+18.05.2017 11:30:55     Sender Ok
+18.05.2017 11:30:55     Client close connect
+18.05.2017 11:31:49     Client InterNetwork connect
+18.05.2017 11:31:49     10
+18.05.2017 11:31:49     Sender Ok
+18.05.2017 11:31:49     Client close connect
+18.05.2017 11:31:54     Client InterNetwork connect
+18.05.2017 11:31:54     10
+18.05.2017 11:31:54     Sender Ok
+18.05.2017 11:31:54     Client close connect
+18.05.2017 11:32:03     Client InterNetwork connect
+18.05.2017 11:32:03     10
+18.05.2017 11:32:03     Sender Ok
+18.05.2017 11:32:03     Client close connect
+18.05.2017 11:32:18     Client InterNetwork connect
+18.05.2017 11:32:18     10
+18.05.2017 11:32:18     Sender Ok
+18.05.2017 11:32:18     Client close connect
+18.05.2017 11:32:20     Client InterNetwork connect
+18.05.2017 11:32:20     10
+18.05.2017 11:32:21     Sender Ok
+18.05.2017 11:32:21     Client close connect

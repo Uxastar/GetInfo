@@ -1,0 +1,5 @@
+C:\Users\kenny\Dropbox\visual studio 2017\Projects\ExtLib\ExtLib\bin\Debug\ExtLib.dll
+C:\Users\kenny\Dropbox\visual studio 2017\Projects\ExtLib\ExtLib\bin\Debug\ExtLib.pdb
+C:\Users\kenny\Dropbox\visual studio 2017\Projects\ExtLib\ExtLib\obj\Debug\ExtLib.csprojResolveAssemblyReference.cache
+C:\Users\kenny\Dropbox\visual studio 2017\Projects\ExtLib\ExtLib\obj\Debug\ExtLib.dll
+C:\Users\kenny\Dropbox\visual studio 2017\Projects\ExtLib\ExtLib\obj\Debug\ExtLib.pdb

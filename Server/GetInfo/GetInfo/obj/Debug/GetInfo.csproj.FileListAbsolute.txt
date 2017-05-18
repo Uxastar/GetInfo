@@ -16,5 +16,5 @@ C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\obj\Debug\Get
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\obj\Debug\GetInfo.csproj.GenerateResource.Cache
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\obj\Debug\GetInfo.exe
 C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\obj\Debug\GetInfo.pdb
-C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\bin\Debug\User.dll
-C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\bin\Debug\User.pdb
+C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\bin\Debug\ExtLib.dll
+C:\Users\kenny\Dropbox\visual studio 2015\Projects\GetInfo\GetInfo\bin\Debug\ExtLib.pdb

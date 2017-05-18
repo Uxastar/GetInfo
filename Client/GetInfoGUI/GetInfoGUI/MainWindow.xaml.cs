@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using ExtLib;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.ObjectModel;
+using System.Net;
 
 namespace GetInfoGUI
 {
@@ -23,34 +25,13 @@ namespace GetInfoGUI
         
     public partial class MainWindow : Window
     {
-
-        [Flags]
-        enum Commands : byte
-        {
-            GetInfoBin = 0x0a,
-            GetInfoJSON = 0x0b,
-            GetInfoXML = 0x0c,
-            GetScreen = 0x14,
-            GetUpdate = 0x15,
-            GetTest = 0xff
-        }
-        public static byte[] _img;
-
-
-        static List<User.User> massiv = new List<User.User>();
-
-
+        static List<User> massiv = new List<User>();
 
         public MainWindow()
         {
             InitializeComponent();
-            listBox.Items.Clear();
-
-            
+            listBox.Items.Clear();                        
         }
-
-
-
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +40,7 @@ namespace GetInfoGUI
 
             if (text_ip.Text == "")
             {
-                System.Windows.MessageBox.Show("Вы не указали сеть", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Вы не указали сеть", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -72,25 +53,27 @@ namespace GetInfoGUI
                 Convert.ToInt32(str_new[3]);
 
                 for (int i = Convert.ToInt32(str_new[3]); i < Convert.ToInt32(str_new[7]); i++)
-                    ip_array.Add(str_new[0] + "." + str_new[1] + "." + str_new[2] + "." + i);
+                    ip_array.Add(str_new[0] + "." + str_new[1] + "." + str_new[2] + "." + i);               
+                
             }
             catch
             {
-                System.Windows.MessageBox.Show("Неверно указана сеть", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверно указана сеть", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-
-
+            
             foreach (string s in ip_array)
             {
-                new Thread(() => Lis(Commands.GetInfoBin, s)).Start();
+                new Thread(() => Lis(Commands.GetInfoBin, s)).Start();                
             }
-            listBox.ItemsSource = massiv;
-            System.Windows.MessageBox.Show("Сканирование завершено", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            MessageBox.Show(massiv.Count.ToString());
+            
+            MessageBox.Show("Сканирование завершено", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            listBox.Dispatcher.BeginInvoke(new Action(delegate () { this.listBox.ItemsSource = massiv; }));
+
+
 
         }
+
         private void StartCmd(object sender, RoutedEventArgs e)
         {
             if (listBox.SelectedItem == null)
@@ -99,11 +82,7 @@ namespace GetInfoGUI
                 return;
             }
 
-
-
-
-
-            Process.Start("PsExec.exe", "\\\\" + ((User.User)listBox.SelectedItem).PC + " cmd");
+            Process.Start("PsExec.exe", "\\\\" + ((User)listBox.SelectedItem).PC + " cmd");
         }
 
         private void UpdateCmd(object sender, RoutedEventArgs e)
@@ -114,115 +93,30 @@ namespace GetInfoGUI
                 return;
             }
 
-            Lis(Commands.GetUpdate, ((User.User)listBox.SelectedItem).IP);
+            Lis(Commands.GetUpdate, ((User)listBox.SelectedItem).IP);
         }
-
-        private static void Lis2(string cmd, string ip)
-        {
-
-            TcpClient client = null;
-            try
-            {
-                client = new TcpClient(ip, 5006);
-
-                NetworkStream stream = client.GetStream();
-
-                BinaryWriter writer = new BinaryWriter(stream);
-                writer.Write(cmd);
-                writer.Flush();
-
-                BinaryReader reader = new BinaryReader(stream);
-                int count = reader.ReadInt32();
-                _img = reader.ReadBytes(count);
-
-                reader.Close();
-
-                writer.Close();
-
-
-
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (client != null)
-                    client.Close();
-
-            }
-
-
-        }
-
-        private static void NewLis(byte[] cmd, string ip)
-        {
-            TcpClient client = null;
-            try
-            {
-                client = new TcpClient(ip, 5006);
-
-                BinaryWriter writer = new BinaryWriter(client.GetStream());
-                writer.Write(cmd);
-                writer.Flush();
-
-                
-                
-                NetworkStream stream = client.GetStream();               
-                
-
-                BinaryFormatter formatter = new BinaryFormatter();
-                massiv.Add((User.User)formatter.Deserialize(stream));
-                MessageBox.Show(massiv[1].Version);
-
-
-            }
-            catch (Exception e)
-            {
-               MessageBox.Show(e.Message);
-            }
-
-        }
+        
 
 
         private static void Lis(Commands cmd, string ip)
         {
-            
             TcpClient client = null;
             try
             {
-                client = new TcpClient("127.0.0.1", 5006);
-
-                //NetworkStream stream = client.GetStream();
+                
+                client = new TcpClient(ip, 5006);                
 
                 BinaryWriter writer = new BinaryWriter(client.GetStream());
                 writer.Write((byte)cmd);
 
-
                 BinaryFormatter formatter = new BinaryFormatter();
-                Collection<byte> byte_massiv = new Collection<byte>();
-
-
+                Collection<byte> byte_massiv = new Collection<byte>();                
 
                 do
                 {
                     byte_massiv.Add((byte)client.GetStream().ReadByte());
-
                 }
-                while (client.GetStream().DataAvailable);
-                MessageBox.Show(byte_massiv.Count.ToString());
-
-
-                // Old
-                //string UserName = reader.ReadString();
-                //string MachineName = reader.ReadString();
-                //string _ip = reader.ReadString();
-                //string _version_user = reader.ReadString();
-                //massiv.Add(new User.User(UserName, MachineName, _ip, _version_user));
-
-
-                
+                while (client.GetStream().DataAvailable);             
 
                 byte[] array = new byte[byte_massiv.Count()];
 
@@ -233,24 +127,14 @@ namespace GetInfoGUI
                 {
                     using (MemoryStream stream = new MemoryStream(array, 0, array.Length))
                     {
-                        massiv.Add((User.User)formatter.Deserialize(stream));
+                        massiv.Add((User)formatter.Deserialize(stream));
                     }
-
-                    System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-                    Bitmap bmp;
-                    using (var ms = new MemoryStream(_img))
-                    {
-                        bmp = new Bitmap(ms);
-                    }
-
                     
-                    IntPtr hBitmap = bmp.GetHbitmap();
-                    BitmapSource so = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "Deserialize", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 writer.Flush();
@@ -270,23 +154,10 @@ namespace GetInfoGUI
 
         }
 
-        private void text_ip_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            text_ip.Text = "";
-        }
-
-
-
-
-        private void Test_click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private BitmapSource Screen(byte[] data)
         {
             Bitmap bmp;
-            using (var ms = new MemoryStream(_img))
+            using (var ms = new MemoryStream(data))
             {
                 bmp = new Bitmap(ms);
             }
@@ -299,20 +170,15 @@ namespace GetInfoGUI
         {
             if (listBox.SelectedItem == null)
             {
-                System.Windows.MessageBox.Show("Элемент не выбран", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Элемент не выбран", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            Lis2("screen", ((User.User)listBox.SelectedItem).IP);
-
-            //System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-            Bitmap bmp;
-            using (var ms = new MemoryStream(_img))
+            Bitmap bmp;               
+            using (MemoryStream stream = new MemoryStream(((User)listBox.SelectedItem).Screen))
             {
-                bmp = new Bitmap(ms);
+                bmp = new Bitmap(stream);
             }
-
-
             
 
             Window2 w = new Window2(bmp);

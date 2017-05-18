@@ -1,5 +1,4 @@
 ﻿using System;
-using User;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,25 +9,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Text;
+using ExtLib;
 
 namespace UdpClientApp
 {
     public class ClientObject
     {
         public TcpClient client;
-
-        [Flags]
-        enum Commands : byte
-        {
-            GetInfoBin = 0x0a,
-            GetInfoJSON = 0x0b,
-            GetInfoXML = 0x0c,
-            GetScreen = 0x14,
-            GetUpdate = 0x15,
-            GetTest = 0xff
-        }
-        
-
 
         public ClientObject(TcpClient tcpClient)
         {
@@ -43,7 +30,7 @@ namespace UdpClientApp
         {
             try
             {
-                Logger.add("Sender OK 0xFF");
+                Form1.logger.write("Sender Ok");
                 BinaryWriter writer = new BinaryWriter(client.GetStream());                
                 writer.Write(data);
                 writer.Flush();
@@ -51,7 +38,7 @@ namespace UdpClientApp
             }
             catch (Exception e)
             {
-                Logger.add(e.Message + "0xFF");
+                Form1.logger.write(e.Message);
             }
         }
 
@@ -60,20 +47,19 @@ namespace UdpClientApp
 
         protected byte[] _Info ()
         {
-            return new User.User(Environment.UserName, Environment.MachineName, GetIp(), Settings.Version, _Screen()).GetBinary();            
+            return new User(Environment.UserName, Environment.MachineName, GetIp(), Form1.settings.Version, _Screen()).GetBinary();
+            
         }
 
         
 
         protected byte[] _Info(string type)
         {
-            User.User tmp = new User.User(Environment.UserName, Environment.MachineName, GetIp(), Settings.Version);
-            
             switch (type)
             {
-                case "bin": return tmp.GetBinary();
-                case "json": return tmp.GetJSON();
-                case "xml": return tmp.GetXML();
+                case "bin": return new User(Environment.UserName, Environment.MachineName, GetIp(), Form1.settings.Version, _Screen()).GetBinary();
+                case "json": return new User(Environment.UserName, Environment.MachineName, GetIp(), Form1.settings.Version).GetJSON();
+                case "xml": return new User(Environment.UserName, Environment.MachineName, GetIp(), Form1.settings.Version).GetXML();
             }
 
             return (new byte[1] { 0x00 });
@@ -102,23 +88,23 @@ namespace UdpClientApp
         public void CmdUpdate(Process process)
         {
 
-            Logger.add("Command from server: Update");
+            Form1.logger.write("Command from server: Update");
 
             try
             {
                 string fileName = "Update.exe", myStringWebResource = null;
                 WebClient myWebClient = new WebClient();
-                myStringWebResource = Settings.UrlUpdate + fileName;
+                myStringWebResource = Form1.settings.UrlUpdate + fileName;
                 myWebClient.DownloadFile(myStringWebResource, fileName);
                 Process.Start("Update.exe", process.Id.ToString());
             }
             catch (Exception e)
             {
-                Logger.add(e.Message);
+                Form1.logger.write(e.Message);
             }
             finally
             {
-                Logger.add("Command end");                
+                Form1.logger.write("Command end");                
             }          
         }
 
@@ -129,7 +115,7 @@ namespace UdpClientApp
                 BinaryReader reader = new BinaryReader(this.client.GetStream());
                 byte cmd = reader.ReadByte();
 
-                Logger.add(cmd.ToString());
+                Form1.logger.write(cmd.ToString());
 
                 switch ((Commands)cmd)
                 {
@@ -139,18 +125,18 @@ namespace UdpClientApp
                     case Commands.GetScreen: Sender(this.client, _Screen()); break;
                     case Commands.GetUpdate: CmdUpdate(Process.GetCurrentProcess()); break;
                     case Commands.GetTest: Sender(this.client, _Test()); break;
-                    default: Logger.add("Incorrect server command "); break;
+                    default: Form1.logger.write("Incorrect server command "); break;
                 }
                 
                 reader.Close();
             }
             catch (Exception e)
             {
-                Logger.add(e.Message + " 0x2F");
+                Form1.logger.write(e.Message + "  _Process");
             }
             finally
             {
-                Logger.add("Client close connect");
+                Form1.logger.write("Client close connect");
                 this.client.Close();
                 MemoryManagement.FlushMemory();
             }

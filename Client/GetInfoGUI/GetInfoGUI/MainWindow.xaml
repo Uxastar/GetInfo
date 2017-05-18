@@ -49,7 +49,7 @@
             </ListBox.ContextMenu>
         </ListBox>
         <Menu x:Name="menu" Height="23" VerticalAlignment="Top">
-            <MenuItem Header="MenuItem" Click="Test_click" Height="23"/>
+            <MenuItem Header="MenuItem" Height="23"/>
         </Menu>
 
 
